@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Anadasu Shethu Babu — Portfolio</title>
+<meta name="description" content="Portfolio of Anadasu Shethu Babu — Java Full Stack, AI/ML, GenAI. Projects, internships, skills, and contact." />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0b0d13; --surface:#111520; --text:#e7ecf2; --muted:#9aa3b2;
+    --brand:#7c5cff; --ring:rgba(124,92,255,.35); --card:#15192d;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0; font-family:"Inter",system-ui,-apple-system,Segoe UI,Roboto;
+    background:var(--bg); color:var(--text); line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{max-width:100%; display:block}
+
+  /* Container */
+  .container{width:min(1150px,92%); margin:0 auto}
+
+  /* Header like Picto */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(11,13,19,.6); backdrop-filter:blur(12px) saturate(140%);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .nav{
+    display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.3px;
+  }
+  .logo-dot{width:10px;height:10px;border-radius:50%;
+    background:linear-gradient(135deg,var(--brand),#00e1ff)}
+  .menu{display:flex; gap:18px; align-items:center}
+  .menu a{color:var(--text); opacity:.85; text-decoration:none; padding:6px 8px; border-radius:8px}
+  .menu a:hover{background:rgba(255,255,255,.06)}
+  /* Filter menu (Picto-like) */
+  .filters{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
+  .filter-btn{
+    border:1px solid rgba(255,255,255,.14); background:var(--surface); color:var(--text);
+    padding:8px 12px; border-radius:999px; cursor:pointer; font-weight:600; font-size:14px;
+  }
+  .filter-btn.active{background:var(--brand); border-color:transparent}
+
+  /* Hero minimal like Picto */
+  .hero{padding:46px 0 22px; text-align:center}
+  .title{font-size:clamp(28px,4.5vw,48px); margin:6px 0 8px; font-weight:800}
+  .subtitle{color:var(--muted); max-width:850px; margin:0 auto}
+
+  /* Portfolio Grid (Picto #2 vibe) */
+  .grid{
+    margin-top:28px;
+    display:grid; gap:16px;
+    grid-template-columns: repeat(12, 1fr);
+  }
+  .tile{
+    position:relative; overflow:hidden; border-radius:18px;
+    border:1px solid rgba(255,255,255,.08); background:#0e121c;
+    grid-column:span 4; /* 3 per row on desktop, like Picto */
+    aspect-ratio:16/10;
+  }
+  .tile img{
+    width:100%; height:100%; object-fit:cover; transform:scale(1.02);
+    transition:transform .45s ease;
+  }
+  .tile:hover img{transform:scale(1.08)}
+  .pill{
+    position:absolute; left:12px; top:12px;
+    font-size:12px; padding:4px 8px; border-radius:999px;
+    background:rgba(0,0,0,.35); color:#fff; border:1px solid rgba(255,255,255,.18)
+  }
+  /* Hover overlay with buttons (Live/GitHub) */
+  .overlay{
+    position:absolute; inset:0; display:flex; flex-direction:column;
+    justify-content:flex-end; padding:16px; gap:8px;
+    background:linear-gradient(180deg, rgba(3,6,12,0) 50%, rgba(3,6,12,.78) 85%, rgba(3,6,12,.92) 100%);
+    opacity:0; transition:opacity .25s ease;
+  }
+  .tile:hover .overlay{opacity:1}
+  .overlay h3{margin:0; font-size:18px; font-weight:700}
+  .overlay p{margin:0; color:var(--muted); font-size:13px}
+  .actions{display:flex; gap:10px; margin-top:10px}
+  .btn{
+    padding:10px 12px; border-radius:12px; border:1px solid rgba(255,255,255,.14);
+    background:var(--brand); color:#fff; font-weight:700; text-decoration:none;
+  }
+  .btn.secondary{background:rgba(255,255,255,.06); color:var(--text)}
+  .hide{display:none !important}
+
+  /* Sections */
+  section{padding:56px 0}
+  .section-head{display:flex; align-items:end; justify-content:space-between; gap:18px; margin-bottom:18px}
+  .section-title{font-size:26px; font-weight:800}
+  .section-sub{color:var(--muted)}
+
+  /* Cards */
+  .card{
+    background:var(--card); border:1px solid rgba(255,255,255,.08);
+    border-radius:16px; padding:18px;
+  }
+  .grid-2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  .chips{display:flex; flex-wrap:wrap; gap:10px}
+  .chip{padding:8px 12px; border-radius:999px; border:1px dashed rgba(255,255,255,.2);
+        background:linear-gradient(180deg, rgba(124,92,255,.10), transparent)}
+  .timeline{border-left:2px solid rgba(255,255,255,.12); padding-left:16px; display:grid; gap:16px}
+  .time-item{position:relative}
+  .time-item::before{content:""; position:absolute; left:-11px; top:6px; width:10px; height:10px; border-radius:50%; background:var(--brand); box-shadow:0 0 0 4px var(--ring)}
+  .time-item h4{margin:0}
+
+  footer{padding:34px 0; border-top:1px solid rgba(255,255,255,.08); color:var(--muted)}
+  /* Contact Form (vertical layout, Picto style) */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: -6px;
+}
+
+form input,
+form textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 10px;
+  background: rgba(255,255,255,.04);
+  color: var(--text);
+  font-size: 15px;
+  transition: border .2s, background .2s;
+}
+
+form input:focus,
+form textarea:focus {
+  outline: none;
+  border-color: var(--brand);
+  background: rgba(124,92,255,.08);
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 140px;
+}
+
+form button {
+  margin-top: 4px;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: var(--brand);
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background .2s;
+}
+
+form button:hover {
+  background: #6241ff;
+}
+
+#formStatus {
+  font-size: 14px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+
+  /* Responsive like Picto */
+  @media (max-width: 1024px){
+    .tile{grid-column:span 6} /* 2 per row */
+  }
+  @media (max-width: 640px){
+    .menu{display:none}
+    .filters{justify-content:center}
+    .tile{grid-column:span 12} /* 1 per row */
+    .grid-2{grid-template-columns:1fr}
+  }
+</style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <div class="container nav">
+      <a href="#home" class="logo"><span class="logo-dot"></span><span>Anadasu&nbsp;Shethu&nbsp;Babu</span></a>
+      <nav class="menu">
+        <a href="#portfolio">Portfolio</a>
+        <a href="#about">About</a>
+        <a href="#internships">Internships</a>
+        <a href="#skills">Skills</a>
+        <a href="#certifications">Certifications</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <!-- Picto-style filter menu -->
+      <div class="filters" role="tablist" aria-label="Project filters">
+        <button class="filter-btn active" data-filter="all" role="tab">All</button>
+        <button class="filter-btn" data-filter="ai" role="tab">AI</button>
+        <button class="filter-btn" data-filter="web" role="tab">Web</button>
+        <button class="filter-btn" data-filter="apps" role="tab">Apps</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section id="home" class="hero container">
+    <h1 class="title">I build clean, reliable products with <span style="background:linear-gradient(90deg,var(--brand),#00e1ff); -webkit-background-clip:text; background-clip:text; color:transparent">code & data</span>.</h1>
+    <p class="subtitle">
+      Java Full-Stack & Applied AI (ML/DL/NLP/GenAI). Focused on performance, UX and production-ready systems.
+      Open to internships & part-time projects. Hyderabad, India.
+    </p>
+  </section>
+
+  <!-- Portfolio Grid -->
+  <section id="portfolio" class="container">
+    <div class="grid" id="grid">
+      <!-- AI UI Generator -->
+      <article class="tile" data-cat="ai apps">
+        <img src="/assets/images/Ai-ui.png" alt="AI UI Generator">
+        <span class="pill">AI</span>
+        <div class="overlay">
+          <h3>AI UI Generator</h3>
+          <p>Turns a hand sketch into responsive HTML/CSS using vision + LLM.</p>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank">Live Demo</a>
+            <a class="btn secondary" href="https://github.com/Shethu-12" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Smart Grocery Assistant -->
+      <article class="tile" data-cat="web apps">
+        <img src="/assets/images/grcocery_image.jpg" alt="Smart Grocery Assistant">
+        <span class="pill">Web</span>
+        <div class="overlay">
+          <h3>Smart Grocery Assistant</h3>
+          <p>Price compare, voice lists, expiry tracking. React + Flask.</p>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank">Live Demo</a>
+            <a class="btn secondary" href="https://github.com/Shethu-12" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- Smart Farming Assistant -->
+      <article class="tile" data-cat="ai web">
+        <img src="/assets/images/Smartfarming.png" alt="Smart Farming Assistant">
+        <span class="pill">AI</span>
+        <div class="overlay">
+          <h3>Smart Farming Assistant</h3>
+          <p>Crop disease hints, fertilizer guide, weather-aware tips (Vision+ML).</p>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank">Live Demo</a>
+            <a class="btn secondary" href="https://github.com/Shethu-12" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- AI-Powered Resume Builder -->
+      <article class="tile" data-cat="ai web apps">
+        <img src="/assets/images/resume.png" alt="AI Resume Builder">
+        <span class="pill">AI</span>
+        <div class="overlay">
+          <h3>AI-Powered Resume Builder</h3>
+          <p>Spring Boot + React + MySQL + GenAI templates & exports.</p>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank">Live Demo</a>
+            <a class="btn secondary" href="https://github.com/Shethu-12" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </article>
+
+      <!-- CareSync – AI Healthcare Assistant -->
+      <article class="tile" data-cat="ai web">
+        <img src="/assets/images/Caresync_image.jpeg" alt="CareSync Healthcare Assistant">
+        <span class="pill">AI</span>
+        <div class="overlay">
+          <h3>CareSync – AI Healthcare Assistant</h3>
+          <p>Symptom chat, reminders, adherence tracking. Spring Boot + React.</p>
+          <div class="actions">
+            <a class="btn" href="#" target="_blank">Live Demo</a>
+            <a class="btn secondary" href="https://github.com/Shethu-12" target="_blank">GitHub</a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-title">About</div>
+        <div class="section-sub">Short & focused</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <p>I'm <b>Anadasu Shethu Babu</b>, a developer who enjoys building practical products across <b>Java/Spring</b>, <b>React</b>, and <b>AI/ML</b>. I focus on clean UX, performance, and reliable deployments. Currently exploring <b>Gen-AI assistants</b> and <b>security analytics</b>.</p>
+        <div class="chips" style="margin-top:10px">
+          <span class="chip">Hyderabad, India</span>
+          <span class="chip">B.Tech CSE — 3rd Year</span>
+          <span class="chip">Open to Internships</span>
+        </div>
+      </div>
+      <div class="card">
+        <h4 style="margin:6px 0 10px">What I bring</h4>
+        <ul style="margin:0; padding-left:18px">
+          <li>Frontend: Reactjs, HTML/CSS/JS, Tailwind</li>
+          <li>Backend: Java Spring Boot, Node/Express, Python Flask</li>
+          <li>AI: TensorFlow/PyTorch, scikit-learn, NLP,ML/DL,Gen-AI</li>
+          <li>Tools:Github,Vscode,Eclipse</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Internships -->
+  <section id="internships" class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-title">Internships</div>
+        <div class="section-sub">Learning by shipping</div>
+      </div>
+    </div>
+    <div class="timeline">
+      <div class="time-item">
+        <h4>AI/ML Intern — APSSDC</h4>
+        <div class="muted">May 2024 – Jul 2024</div>
+        <p>Built Sentiment Analysis for restaurant reviews using TF-IDF and classifiers.</p>
+      </div>
+      <div class="time-item">
+        <h4>AI/ML Intern — APSCHE</h4>
+        <div class="muted">May 2025 – Jul 2025</div>
+        <p>TrafficTelligence: ML-based traffic trend prediction with classification & regression.</p>
+      </div>
+      <div class="time-item">
+        <h4>Web Development Intern — Apex Planet</h4>
+        <div class="muted">Apr 2025 · 45-day program</div>
+        <p>Progressed from HTML/CSS/JS to full web apps, performance tuning, and deployment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-title">Skills</div>
+        <div class="section-sub">Snapshot of my toolkit</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="chips">
+        <span class="chip">Java</span>
+        <span class="chip">Spring Boot</span>
+        <span class="chip">JavaScript</span>
+        <span class="chip">React</span>
+        <span class="chip">Node.js</span>
+        <span class="chip">Python</span>
+        <span class="chip">Flask</span>
+        <span class="chip">Machine Learning</span>
+        <span class="chip">Deep Learning</span>
+        <span class="chip">Gen AI</span>
+        <span class="chip">NLP</span>
+        <span class="chip">SQL</span>
+        <span class="chip">MongoDB</span>
+        <span class="chip">MySQL</span>
+        <span class="chip">C</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Certifications -->
+  <section id="certifications" class="container">
+    <div class="section-head">
+      <div class="section-title">Certifications</div>
+      <div class="section-sub">Recent credentials</div>
+    </div>
+    <div class="grid-2">
+      <div class="card"><b>Oracle Cloud Infrastructure 2025</b> — Certified Data Science Professional</div>
+      <div class="card"><b>Oracle Cloud Infrastructure 2025</b> — Certified Generative AI Professional</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="container">
+    <div class="section-head">
+      <div>
+        <div class="section-title">Contact</div>
+        <div class="section-sub">Let’s build something</div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div class="card">
+        <form id="contactForm">
+          <input name="name" placeholder="Your name" required />
+          <input type="email" name="email" placeholder="Email" required />
+          <textarea name="message" placeholder="Tell me about your project…" rows="6" required></textarea>
+          <button class="btn" type="submit">Send</button>
+          <div id="formStatus" class="section-sub" aria-live="polite" style="margin-top:6px"></div>
+        </form>
+      </div>
+      <div class="card">
+        <p>Email: <a href="mailto:ashethubabu333@gmail.com">ashethubabu333@gmail.com</a></p>
+        <p>Phone: +91-9010115513</p>
+        <p><a href="https://www.linkedin.com/in/anadasu-shethu-babu-4a9a13206" target="_blank">LinkedIn</a> •
+           <a href="https://github.com/Shethu-12" target="_blank">GitHub</a></p>
+        <div class="chips" style="margin-top:10px">
+          <span class="chip">Avg response: &lt; 24h</span>
+          <span class="chip">Open to Internships</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container" style="display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap">
+      <div>© <span id="year"></span> Anadasu Shethu Babu</div>
+      <div class="section-sub">Built with HTML • CSS • JS</div>
+    </div>
+  </footer>
+
+<script>
+  // Year
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Filter logic (Picto-style)
+  const grid = document.getElementById('grid');
+  const filters = document.querySelectorAll('.filter-btn');
+  filters.forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      filters.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const cat = btn.dataset.filter;
+      [...grid.children].forEach(tile=>{
+        const show = cat === 'all' || tile.dataset.cat.split(' ').includes(cat);
+        tile.classList.toggle('hide', !show);
+      });
+      // smooth scroll back to grid top for UX
+      grid.scrollIntoView({behavior:'smooth', block:'start'});
+    });
+  });
+
+  // Contact form (client-side only)
+  const form = document.getElementById('contactForm');
+  const statusEl = document.getElementById('formStatus');
+  form.addEventListener('submit', (e)=>{
+    e.preventDefault();
+    statusEl.textContent = 'Thanks! This demo stores nothing. Connect Formspree or your backend.';
+    form.reset();
+  });
+</script>
+</body>
+</html>
